@@ -3,6 +3,8 @@ package idea.verlif.spring.limit.impl;
 import idea.verlif.spring.limit.LimitHandler;
 import idea.verlif.spring.limit.NotArrivedHandler;
 import idea.verlif.spring.limit.anno.Limit;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.lang.reflect.Method;
 
@@ -11,13 +13,17 @@ import java.lang.reflect.Method;
  */
 public class DefaultNotArrivedHandler implements NotArrivedHandler {
 
+    private static final Logger LOGGER = LogManager.getLogger(NotArrivedHandler.class);
+
     @Override
     public Object noSuchHandler(Class<? extends LimitHandler> cl) {
-        return "No such LimitHandler - " + cl.getName();
+        LOGGER.warn("No such LimitHandler - " + cl.getName());
+        return null;
     }
 
     @Override
     public Object notArrived(Method method, Limit limit) {
-        return "limited!";
+        LOGGER.warn("limited!");
+        return null;
     }
 }
